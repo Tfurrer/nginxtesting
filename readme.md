@@ -1,21 +1,23 @@
 
 
 # Instructions
-## build
-
+## Build
+Compose in CMD or other Terminal at the root directory of the folder
 ``` docker compose up -d ```
 
-## execute
+## Execute
+Attach to the clientmac to run the following commands
 ``` docker attach clientmac ```
-Validate your internal IP Address Allocated to ClientMac
+1. Validate your internal IP Address Allocated to ClientMac
 ``` ip addr show ```
 
-Validate the reverse proxy
+2. Validate the reverse proxy
 ```
 curl handler1:80 #Restricted
 curl handler1:81 #Allowed
 ```
 
+## Update
 Manipulate the Handler Nginx Config (use a new terminal)
 ```
 docker exec -it handler1 sh -c "echo 'allow 172.21.0.2;' > '/var/www-allow/board_a_allow.conf' && service nginx reload"
