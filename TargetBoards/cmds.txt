@@ -1,0 +1,8 @@
+docker build -f dockerfile_board1 . -t nginx_targetboard1
+docker build -f dockerfile_board2 . -t nginx_targetboard2
+
+docker run --name tgboard1 -d --network boardfarm --ip 172.23.0.2 nginx_targetboard1
+docker run --name tgboard2 -d --network boardfarm --ip 172.23.0.3 nginx_targetboard2
+
+docker stop tgboard1 tgboard2
+docker rm tgboard1 tgboard2

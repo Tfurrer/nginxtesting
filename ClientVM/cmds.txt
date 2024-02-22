@@ -1,0 +1,13 @@
+docker build . -t clientmachine
+
+docker run -dit --name clientmac --network clientsite --ip 172.21.0.2 clientmachine ash
+docker run -dit --name clientmac2 --network clientsite --ip 172.21.0.3 clientmachine ash
+
+docker attach clientmac
+
+ip addr show
+# find the second section IP address
+
+ping -c 2 google.com
+ping -c 2 172.21.0.2
+ping -c 2 clientmac2

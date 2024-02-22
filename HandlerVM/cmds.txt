@@ -1,0 +1,15 @@
+docker stop handler1
+docker rm handler1 -v
+
+docker build . -t handler
+docker run -dit --name handler1 handler
+
+docker network connect clientsite handler1
+docker network connect boardfarm handler1
+
+docker exec -it handler1 sh
+cd /var/www-allow/
+cat board_a_allow.conf
+echo "allow 172.21.0.2;" > 'board_a_allow.conf'
+
+docker exec -it handler1 sh -c "echo 'allow 172.21.0.3;' > '/var/www-allow/board_a_allow.conf' && service nginx reload"

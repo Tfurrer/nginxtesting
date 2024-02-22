@@ -1,0 +1,67 @@
+services:
+  clientmac:
+    build: 
+      context: ClientVM
+      dockerfile: dockerfile
+    container_name: clientmac
+    stdin_open: true
+    tty: true
+    command: ash
+    networks:
+      clientsite:
+        ipv4_address: 172.21.0.2
+  clientmac2:
+    build: 
+      context: ClientVM
+      dockerfile: dockerfile
+    container_name: clientmac2
+    stdin_open: true
+    tty: true
+    command: ash
+    networks:
+      clientsite:
+        ipv4_address: 172.21.0.3
+  handler:
+    build: 
+      context: HandlerVM
+      dockerfile: dockerfile
+    container_name: handler1
+    stdin_open: true
+    tty: true
+    networks:
+      clientsite:
+        ipv4_address: 172.21.0.4
+      boardfarm:
+        ipv4_address: 172.23.0.4
+  tgboard1:
+    build: 
+      context: TargetBoards
+      dockerfile: dockerfile_board1
+    container_name: tgboard1
+    stdin_open: true
+    tty: true
+    networks:
+      boardfarm:
+        ipv4_address: 172.23.0.2
+  tgboard2:
+    build: 
+      context: TargetBoards
+      dockerfile: dockerfile_board2
+    container_name: tgboard2
+    stdin_open: true
+    tty: true
+    networks:
+      boardfarm:
+        ipv4_address: 172.23.0.3
+
+networks:
+  clientsite:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/16
+  boardfarm:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.23.0.0/16
